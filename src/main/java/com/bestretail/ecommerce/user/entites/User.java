@@ -15,6 +15,14 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    public User(@NotEmpty String email) {
+        this.email = email;
+    }
+
+    // Used by hibernate
+    public User() {
+    }
+
     @Basic
     private String name;
 
