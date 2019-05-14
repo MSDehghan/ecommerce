@@ -1,1 +1,14 @@
 language: java
+
+cache:
+  directories:
+    - $HOME/.m2
+
+dist: xenial
+
+env:
+  global:
+    SPRING_PROFILES_ACTIVE=ci
+
+services:
+  - mysql
