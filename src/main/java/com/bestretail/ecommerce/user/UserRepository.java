@@ -1,6 +1,5 @@
-package com.bestretail.ecommerce.user.repository;
+package com.bestretail.ecommerce.user;
 
-import com.bestretail.ecommerce.user.entites.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
