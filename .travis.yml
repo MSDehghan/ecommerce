@@ -31,3 +31,6 @@ deploy:
   app: "ecommerce"
   env: "ecommerce-env"
   bucket_name: "elasticbeanstalk-us-east-1-340919845758"
+  zip_file: "$TRAVIS_BUILD_DIR/target/application.jar"
+  skip_cleanup: true
+  bucket_path: "/"
