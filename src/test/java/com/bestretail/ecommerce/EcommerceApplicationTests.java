@@ -1,7 +1,7 @@
 package com.bestretail.ecommerce;
 
-import com.bestretail.ecommerce.category.Category;
-import com.bestretail.ecommerce.category.CategoryRepository;
+import com.bestretail.ecommerce.app.category.Category;
+import com.bestretail.ecommerce.app.category.CategoryRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

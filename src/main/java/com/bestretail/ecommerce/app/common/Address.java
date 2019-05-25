@@ -1,4 +1,4 @@
-package com.bestretail.ecommerce.common;
+package com.bestretail.ecommerce.app.common;
 
 import javax.persistence.Basic;
 import javax.persistence.Embeddable;

@@ -1,22 +1,25 @@
-package com.bestretail.ecommerce.category;
+package com.bestretail.ecommerce.app.maker;
+
+import com.bestretail.ecommerce.app.common.Address;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
-public class Category {
+public class Maker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank
     @Size(max = 254)
-    @Column(nullable = false, length = 254)
+    @Column(nullable = false,length = 254)
     private String name;
 
-    @ManyToOne
-    private Category parent;
+    @ElementCollection
+    private Set<Address> addresses;
 
     public Integer getId() {
         return id;
@@ -34,11 +37,11 @@ public class Category {
         this.name = name;
     }
 
-    public Category getParent() {
-        return parent;
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setParent(Category parent) {
-        this.parent = parent;
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
     }
 }

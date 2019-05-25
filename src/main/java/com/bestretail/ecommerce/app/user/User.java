@@ -1,6 +1,6 @@
-package com.bestretail.ecommerce.user;
+package com.bestretail.ecommerce.app.user;
 
-import com.bestretail.ecommerce.common.Address;
+import com.bestretail.ecommerce.app.common.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

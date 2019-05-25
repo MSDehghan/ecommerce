@@ -20,3 +20,14 @@ env:
 
 services:
   - mysql
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id:
+    secure: "$AMAZON_ACCESS_KEY"
+  secret_access_key:
+    secure: "$AMAZON_SECRET_ACCESS_KEY"
+  region: "us-east-1"
+  app: "ecommerce"
+  env: "ecommerce-env"
+  bucket_name: "elasticbeanstalk-us-east-1-340919845758"
