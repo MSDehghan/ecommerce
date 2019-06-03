@@ -1,6 +1,7 @@
 package com.bestretail.ecommerce.app.maker;
 
 import com.bestretail.ecommerce.app.common.Address;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +16,7 @@ public class Maker {
 
     @NotBlank
     @Size(max = 254)
-    @Column(nullable = false,length = 254)
+    @Column(nullable = false, unique = true, length = 254)
     private String name;
 
     @ElementCollection

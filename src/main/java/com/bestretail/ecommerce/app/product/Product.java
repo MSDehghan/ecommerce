@@ -4,6 +4,9 @@ import com.bestretail.ecommerce.app.category.Category;
 import com.bestretail.ecommerce.app.maker.Maker;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -12,16 +15,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pid;
 
-    @Basic(optional = false)
+    @NotBlank
+    @Size(max = 254)
+    @Column(nullable = false, length = 254)
     private String name;
 
     @Basic(optional = false)
+    @DecimalMin("0")
     private Integer mainPrice;
 
     @Column(columnDefinition = "text")
     private String description;
 
     @Basic(optional = false)
+    @DecimalMin("0")
     private Integer remaining;
 
     @ElementCollection
