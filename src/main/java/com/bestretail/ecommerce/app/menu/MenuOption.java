@@ -1,6 +1,6 @@
 package com.bestretail.ecommerce.app.menu;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,11 +19,12 @@ public class MenuOption {
     @Column(nullable = false, length = 254)
     private String name;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Set<MenuOption> subMenus;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     private MenuOption parent;
 
     public Integer getId() {

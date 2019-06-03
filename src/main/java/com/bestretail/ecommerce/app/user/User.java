@@ -1,7 +1,7 @@
 package com.bestretail.ecommerce.app.user;
 
 import com.bestretail.ecommerce.app.common.Address;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,25 +18,24 @@ public class User {
 
     @Email
     @Size(min = 5, max = 254)
-    @Column(length = 254, unique = true)
+    @Column(length = 254, unique = true, nullable = false)
     private String email;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
     @Size(min = 60, max = 60)
     @Column(name = "password_hash", length = 60, nullable = false)
     private String password;
 
-    @Size(max = 50)
-    @Column(name = "name", length = 50)
+    @Size(max = 254)
+    @Column(name = "name", length = 254)
     private String name;
 
-    @Size(max = 50)
-    @Column(name = "last_name", length = 50)
+    @Size(max = 254)
+    @Column(length = 254)
     private String lastName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 5)
+    @Enumerated(EnumType.ORDINAL)
     private Sex sex;
 
     @ElementCollection
@@ -74,8 +73,8 @@ public class User {
         return addresses;
     }
 
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
+    public void addAddress(Address address) {
+        this.addresses.add(address);
     }
 
     public Integer getId() {

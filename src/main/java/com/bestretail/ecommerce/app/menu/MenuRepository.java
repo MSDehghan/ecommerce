@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface MenuRepository extends JpaRepository<MenuOption, Integer> {
     Optional<MenuOption> findByName(String name);
 
-    @Query("SELECT m FROM MenuOption m JOIN FETCH m.subMenus WHERE m.parent IS NULL")
+    @Query("SELECT m FROM MenuOption m WHERE m.parent IS NULL")
     List<MenuOption> findAllParents();
 }

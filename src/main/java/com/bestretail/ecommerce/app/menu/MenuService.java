@@ -1,6 +1,5 @@
 package com.bestretail.ecommerce.app.menu;
 
-import com.bestretail.ecommerce.app.category.Category;
 import com.bestretail.ecommerce.exceptions.ResourceAlreadyExistsException;
 import com.bestretail.ecommerce.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ public class MenuService {
         this.repository = repository;
     }
 
-    public MenuOption addMenu(MenuOption menu){
+    public MenuOption addMenu(MenuOption menu) {
         if (menu.getParent() != null && menu.getParent().getId() == null)
             throw new IllegalArgumentException("Parent id must be present.");
 
@@ -27,11 +26,11 @@ public class MenuService {
         return repository.save(menu);
     }
 
-    public List<MenuOption> findAllParents(){
+    public List<MenuOption> findAllParents() {
         return repository.findAllParents();
     }
 
-    public MenuOption findMenuById(int id){
+    public MenuOption findMenuById(int id) {
         Optional<MenuOption> menu = repository.findById(id);
         return menu.orElseThrow(IllegalArgumentException::new);
     }
