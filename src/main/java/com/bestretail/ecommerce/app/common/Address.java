@@ -8,12 +8,37 @@ import java.util.Objects;
 public class Address {
     @Basic
     private String province;
+
     @Basic
     private String city;
+
     @Basic
     private String zipCode;
+
     @Basic
     private String phone;
+
+    @Basic
+    private Integer lat;
+
+    @Basic
+    private Integer lang;
+
+    public Integer getLat() {
+        return lat;
+    }
+
+    public void setLat(Integer lat) {
+        this.lat = lat;
+    }
+
+    public Integer getLang() {
+        return lang;
+    }
+
+    public void setLang(Integer lang) {
+        this.lang = lang;
+    }
 
     public String getProvince() {
         return province;

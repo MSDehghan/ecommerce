@@ -1,10 +1,13 @@
 package com.bestretail.ecommerce.config;
 
+import com.bestretail.ecommerce.config.jwt.JWTConfigurer;
+import com.bestretail.ecommerce.config.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -12,14 +15,23 @@ import org.springframework.web.cors.CorsConfiguration;
 public class Security extends WebSecurityConfigurerAdapter {
     public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
+    private final TokenProvider tokenProvider;
+    private final DomainUserDetailsService userDetailsService;
+
+    public Security(DomainUserDetailsService userDetailsService, TokenProvider tokenProvider) {
+        this.userDetailsService = userDetailsService;
+        this.tokenProvider = tokenProvider;
+    }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return PASSWORD_ENCODER;
     }
 
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        super.configure(auth);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -27,9 +39,13 @@ public class Security extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .anyRequest().permitAll()
                 .and()
-                .cors()
-                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .headers().frameOptions().disable()
                 .and()
-                .csrf().disable();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and()
+                .csrf().disable()
+                .apply(new JWTConfigurer(tokenProvider));
     }
 }

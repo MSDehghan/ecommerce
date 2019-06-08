@@ -1,13 +1,12 @@
 package com.bestretail.ecommerce.app.menu;
 
-import com.bestretail.ecommerce.app.category.Category;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/menu")
+@RequestMapping("/api/v1/menu")
 public class MenuController {
     private final MenuService service;
 

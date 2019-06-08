@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Entity
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -38,11 +37,22 @@ public class User {
     @Enumerated(EnumType.ORDINAL)
     private Sex sex;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @ElementCollection
     private Set<Address> addresses;
 
     // Used by hibernate
     public User() {
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getPassword() {

@@ -2,6 +2,7 @@ package com.bestretail.ecommerce.app.product;
 
 import com.bestretail.ecommerce.app.category.Category;
 import com.bestretail.ecommerce.app.maker.Maker;
+import com.bestretail.ecommerce.app.promo.Promo;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -39,6 +40,17 @@ public class Product {
 
     @ManyToOne(optional = false)
     private Maker maker;
+
+    @ManyToOne
+    private Promo promotion;
+
+    public Promo getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Promo promotion) {
+        this.promotion = promotion;
+    }
 
     public Integer getPid() {
         return pid;

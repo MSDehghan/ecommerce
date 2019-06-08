@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class UserDTO {
@@ -20,8 +19,8 @@ public class UserDTO {
     private String lastName;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
-    @Size(min = 8, max = 255)
+//    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+//    @Size(min = 8, max = 255)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -33,6 +32,7 @@ public class UserDTO {
         user.setLastName(lastName);
         user.setName(name);
         user.setSex(sex);
+        user.setRole(Role.ROLE_USER);
         user.setPassword(Security.PASSWORD_ENCODER.encode(password));
         return user;
     }
