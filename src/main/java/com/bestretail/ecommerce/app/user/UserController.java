@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authorize(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenWrapper> authorize(@Valid @RequestBody LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
@@ -44,7 +44,7 @@ public class UserController {
         String jwt = tokenProvider.createToken(authentication, rememberMe);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(jwt, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new TokenWrapper(jwt), httpHeaders, HttpStatus.OK);
     }
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -55,5 +55,17 @@ public class UserController {
     @GetMapping("/userinfo")
     public User getInfo() {
         return service.getUserInfo(1);
+    }
+
+    public static class TokenWrapper {
+        private String token;
+
+        public TokenWrapper(String token) {
+            this.token = token;
+        }
+
+        public String getToken() {
+            return token;
+        }
     }
 }
