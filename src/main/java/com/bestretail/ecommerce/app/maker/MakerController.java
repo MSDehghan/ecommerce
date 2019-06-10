@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/menu", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/maker", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MakerController {
     private final MakerService service;
 
