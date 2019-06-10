@@ -3,6 +3,7 @@ package com.bestretail.ecommerce.app.product;
 import com.bestretail.ecommerce.app.category.Category;
 import com.bestretail.ecommerce.app.maker.Maker;
 import com.bestretail.ecommerce.app.promo.Promo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -42,6 +43,7 @@ public class Product {
     private Maker maker;
 
     @ManyToOne
+    @JsonProperty("promo_code")
     private Promo promotion;
 
     public Promo getPromotion() {
