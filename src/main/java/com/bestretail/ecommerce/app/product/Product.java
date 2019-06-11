@@ -24,6 +24,7 @@ public class Product {
 
     @Basic(optional = false)
     @DecimalMin("0")
+    @JsonProperty("main_price")
     private Integer mainPrice;
 
     @Column(columnDefinition = "text")

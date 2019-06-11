@@ -1,5 +1,8 @@
-package com.bestretail.ecommerce.app.user;
+package com.bestretail.ecommerce.app.user.dto;
 
+import com.bestretail.ecommerce.app.user.Role;
+import com.bestretail.ecommerce.app.user.Sex;
+import com.bestretail.ecommerce.app.user.User;
 import com.bestretail.ecommerce.config.Security;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,11 +21,21 @@ public class UserDTO {
     @Size(max = 254)
     private String lastName;
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @NotBlank
 //    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
 //    @Size(min = 8, max = 255)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    private Role role;
 
     private Sex sex;
 
@@ -32,7 +45,7 @@ public class UserDTO {
         user.setLastName(lastName);
         user.setName(name);
         user.setSex(sex);
-        user.setRole(Role.ROLE_USER);
+        user.setRole(role == null ? Role.ROLE_USER : Role.ROLE_ADMIN);
         user.setPassword(Security.PASSWORD_ENCODER.encode(password));
         return user;
     }

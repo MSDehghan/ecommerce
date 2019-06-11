@@ -1,12 +1,15 @@
 package com.bestretail.ecommerce.app.user;
 
 import com.bestretail.ecommerce.app.user.dto.LoginDto;
+import com.bestretail.ecommerce.app.user.dto.UserDTO;
+import com.bestretail.ecommerce.config.SecurityUtils;
 import com.bestretail.ecommerce.config.jwt.JWTFilter;
 import com.bestretail.ecommerce.config.jwt.TokenProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -53,8 +56,9 @@ public class UserController {
     }
 
     @GetMapping("/userinfo")
+    @PreAuthorize("hasRole(\"USER\")")
     public User getInfo() {
-        return service.getUserInfo(1);
+        return service.getUserInfo(SecurityUtils.getCurrentUserLogin().orElseThrow(IllegalStateException::new));
     }
 
     public static class TokenWrapper {

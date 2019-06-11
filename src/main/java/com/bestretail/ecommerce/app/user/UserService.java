@@ -1,5 +1,6 @@
 package com.bestretail.ecommerce.app.user;
 
+import com.bestretail.ecommerce.app.user.dto.UserDTO;
 import com.bestretail.ecommerce.exceptions.ResourceAlreadyExistsException;
 import com.bestretail.ecommerce.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User getUserInfo(int id) {
-        Optional<User> optionalUser = repository.findById(id);
+    public User getUserInfo(String email) {
+        Optional<User> optionalUser = repository.findByEmail(email);
 
         if (!optionalUser.isPresent())
             throw new ResourceNotFoundException("User not found!");
