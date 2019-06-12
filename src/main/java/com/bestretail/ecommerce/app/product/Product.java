@@ -15,6 +15,7 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("uid")
     private Integer pid;
 
     @NotBlank
@@ -28,13 +29,16 @@ public class Product {
     private Integer mainPrice;
 
     @Column(columnDefinition = "text")
+    @JsonProperty("detail")
     private String description;
 
     @Basic(optional = false)
     @DecimalMin("0")
+    @JsonProperty("remainingCount")
     private Integer remaining;
 
     @ElementCollection
+    @JsonProperty("image_address")
     private Set<String> images;
 
     @ManyToOne(optional = false)

@@ -57,7 +57,14 @@ public class Security extends WebSecurityConfigurerAdapter {
         return request -> {
             CorsConfiguration conf = new CorsConfiguration();
             conf.applyPermitDefaultValues();
+
+            conf.addAllowedMethod(HttpMethod.OPTIONS);
+            conf.addAllowedMethod(HttpMethod.GET);
+            conf.addAllowedMethod(HttpMethod.PUT);
+            conf.addAllowedMethod(HttpMethod.DELETE);
+
             conf.addAllowedMethod(HttpMethod.POST);
+            conf.addAllowedMethod(HttpMethod.OPTIONS);
             conf.addAllowedMethod(HttpMethod.GET);
             conf.addAllowedMethod(HttpMethod.PUT);
             conf.addAllowedMethod(HttpMethod.DELETE);
