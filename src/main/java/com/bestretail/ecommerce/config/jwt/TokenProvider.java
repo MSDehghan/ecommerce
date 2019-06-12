@@ -35,10 +35,10 @@ public class TokenProvider implements InitializingBean {
     private String base64secret;
 
     @Value("${auth.jwt.token-validity-in-seconds}")
-    private String tokenValidityInSeconds;
+    private Long tokenValidityInSeconds;
 
     @Value("${auth.jwt.token-validity-in-seconds-for-remember-me}")
-    private String tokenValidityInSecondsForRememberMe;
+    private Long tokenValidityInSecondsForRememberMe;
 
     private Key key;
 
@@ -58,8 +58,8 @@ public class TokenProvider implements InitializingBean {
             keyBytes = Decoders.BASE64.decode(base64secret);
         }
         this.key = Keys.hmacShaKeyFor(keyBytes);
-        this.tokenValidityInMilliseconds = 1000 * this.tokenValidityInMilliseconds;
-        this.tokenValidityInMillisecondsForRememberMe = 1000 * this.tokenValidityInMillisecondsForRememberMe;
+        this.tokenValidityInMilliseconds = 1000 * this.tokenValidityInSeconds;
+        this.tokenValidityInMillisecondsForRememberMe = 1000 * this.tokenValidityInSecondsForRememberMe;
     }
 
     public String createToken(Authentication authentication, boolean rememberMe) {

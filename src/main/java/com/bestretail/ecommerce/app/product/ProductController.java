@@ -1,5 +1,6 @@
 package com.bestretail.ecommerce.app.product;
 
+import com.bestretail.ecommerce.app.product.dto.SearchResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<Product> searchInName(@RequestParam String search) {
+    public List<SearchResult> searchInName(@RequestParam String search) {
         if (search == null || search.isEmpty() || search.length() < 3)
             throw new IllegalArgumentException("Search request should be at least 3 characters.");
 
@@ -34,7 +35,7 @@ public class ProductController {
     }
 
     @GetMapping("/category")
-    public List<Product> getAllInCategory(int catId) {
+    public List<SearchResult> getAllInCategory(int catId) {
         return service.getAllInCat(catId);
     }
 }

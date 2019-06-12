@@ -1,10 +1,13 @@
 package com.bestretail.ecommerce.app.product;
 
+import com.bestretail.ecommerce.app.product.dto.SearchResult;
 import com.bestretail.ecommerce.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -26,11 +29,15 @@ public class ProductService {
         return optionalProduct.get();
     }
 
-    public List<Product> searchInName(String search) {
-        return repository.findProductsByNameIsLike(search);
+    public List<SearchResult> searchInName(String search) {
+        return repository.findProductsByNameIsLike(search).stream()
+                .map(product -> new SearchResult(product, new Date(), 1, 1))
+                .collect(Collectors.toList());
     }
 
-    public List<Product> getAllInCat(int catId) {
-        return repository.findProductsByCategoryId(catId);
+    public List<SearchResult> getAllInCat(int catId) {
+        return repository.findProductsByCategoryId(catId).stream()
+                .map(product -> new SearchResult(product, new Date(), 1, 1))
+                .collect(Collectors.toList());
     }
 }

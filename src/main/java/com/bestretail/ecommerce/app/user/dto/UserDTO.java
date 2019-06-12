@@ -45,7 +45,7 @@ public class UserDTO {
         user.setLastName(lastName);
         user.setName(name);
         user.setSex(sex);
-        user.setRole(role == null ? Role.ROLE_USER : Role.ROLE_ADMIN);
+        user.setRole(role == null ? Role.ROLE_USER : role);
         user.setPassword(Security.PASSWORD_ENCODER.encode(password));
         return user;
     }
