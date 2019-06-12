@@ -4,14 +4,15 @@ import com.bestretail.ecommerce.config.jwt.JWTConfigurer;
 import com.bestretail.ecommerce.config.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -46,9 +47,24 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .cors().configurationSource(corsConfiguration())
                 .and()
                 .csrf().disable()
                 .apply(new JWTConfigurer(tokenProvider));
+    }
+
+    private CorsConfigurationSource corsConfiguration() {
+        return request -> {
+            CorsConfiguration conf = new CorsConfiguration();
+            conf.applyPermitDefaultValues();
+            conf.addAllowedMethod(HttpMethod.POST);
+            conf.addAllowedMethod(HttpMethod.GET);
+            conf.addAllowedMethod(HttpMethod.PUT);
+            conf.addAllowedMethod(HttpMethod.DELETE);
+            conf.addAllowedHeader("Authorization");
+            conf.addExposedHeader("Authorization");
+            conf.setAllowCredentials(true);
+            return conf;
+        };
     }
 }
