@@ -2,9 +2,9 @@ package com.bestretail.ecommerce.app.user;
 
 import com.bestretail.ecommerce.app.user.dto.LoginDto;
 import com.bestretail.ecommerce.app.user.dto.UserDTO;
-import com.bestretail.ecommerce.config.SecurityUtils;
-import com.bestretail.ecommerce.config.jwt.JWTFilter;
-import com.bestretail.ecommerce.config.jwt.TokenProvider;
+import com.bestretail.ecommerce.security.SecurityUtils;
+import com.bestretail.ecommerce.security.jwt.JWTFilter;
+import com.bestretail.ecommerce.security.jwt.TokenProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @PreAuthorize("isAnonymous()")
     public ResponseEntity<TokenWrapper> authorize(@Valid @RequestBody LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -51,13 +52,14 @@ public class UserController {
     }
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAnonymous()")
     public void register(@Valid @RequestBody UserDTO user) {
         service.registerUser(user);
     }
 
     @GetMapping("/userinfo")
-    @PreAuthorize("hasRole(\"USER\")")
-    public User getInfo() {
+    @PreAuthorize("hasRole('USER')")
+    public UserEntity getInfo() {
         return service.getUserInfo(SecurityUtils.getCurrentUserLogin().orElseThrow(IllegalStateException::new));
     }
 

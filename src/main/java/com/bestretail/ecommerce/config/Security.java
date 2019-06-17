@@ -1,7 +1,8 @@
 package com.bestretail.ecommerce.config;
 
-import com.bestretail.ecommerce.config.jwt.JWTConfigurer;
-import com.bestretail.ecommerce.config.jwt.TokenProvider;
+import com.bestretail.ecommerce.security.jwt.JWTConfigurer;
+import com.bestretail.ecommerce.security.jwt.TokenProvider;
+import com.bestretail.ecommerce.security.DomainUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

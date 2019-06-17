@@ -15,19 +15,19 @@ public class UserService {
         this.repository = repository;
     }
 
-    public User registerUser(UserDTO userDTO) {
-        Optional<User> optionalUser = repository.findByEmail(userDTO.getEmail());
+    public UserEntity registerUser(UserDTO userDTO) {
+        Optional<UserEntity> optionalUser = repository.findByEmail(userDTO.getEmail());
 
         if (optionalUser.isPresent())
             throw new ResourceAlreadyExistsException("User with this email already exists.");
 
-        User user = userDTO.toEntity();
+        UserEntity userEntity = userDTO.toEntity();
 
-        return repository.save(user);
+        return repository.save(userEntity);
     }
 
-    public User getUserInfo(String email) {
-        Optional<User> optionalUser = repository.findByEmail(email);
+    public UserEntity getUserInfo(String email) {
+        Optional<UserEntity> optionalUser = repository.findByEmail(email);
 
         if (!optionalUser.isPresent())
             throw new ResourceNotFoundException("User not found!");

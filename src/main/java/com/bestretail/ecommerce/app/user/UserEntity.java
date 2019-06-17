@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -44,7 +44,7 @@ public class User {
     private Set<Address> addresses;
 
     // Used by hibernate
-    public User() {
+    public UserEntity() {
     }
 
     public Role getRole() {

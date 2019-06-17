@@ -26,6 +26,11 @@ public class ProductController {
         return service.getById(id);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") int id) {
+        service.removeById(id);
+    }
+
     @GetMapping("/search")
     public List<SearchResult> searchInName(@RequestParam String search) {
         if (search == null || search.isEmpty() || search.length() < 3)

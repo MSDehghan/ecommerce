@@ -1,4 +1,4 @@
-package com.bestretail.ecommerce.config.jwt;
+package com.bestretail.ecommerce.security.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

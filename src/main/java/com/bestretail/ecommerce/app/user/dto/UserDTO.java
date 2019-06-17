@@ -2,7 +2,7 @@ package com.bestretail.ecommerce.app.user.dto;
 
 import com.bestretail.ecommerce.app.user.Role;
 import com.bestretail.ecommerce.app.user.Sex;
-import com.bestretail.ecommerce.app.user.User;
+import com.bestretail.ecommerce.app.user.UserEntity;
 import com.bestretail.ecommerce.config.Security;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -39,15 +39,15 @@ public class UserDTO {
 
     private Sex sex;
 
-    public User toEntity() {
-        User user = new User();
-        user.setEmail(email);
-        user.setLastName(lastName);
-        user.setName(name);
-        user.setSex(sex);
-        user.setRole(role == null ? Role.ROLE_USER : role);
-        user.setPassword(Security.PASSWORD_ENCODER.encode(password));
-        return user;
+    public UserEntity toEntity() {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(email);
+        userEntity.setLastName(lastName);
+        userEntity.setName(name);
+        userEntity.setSex(sex);
+        userEntity.setRole(role == null ? Role.ROLE_USER : role);
+        userEntity.setPassword(Security.PASSWORD_ENCODER.encode(password));
+        return userEntity;
     }
 
     public String getEmail() {

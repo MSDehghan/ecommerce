@@ -1,4 +1,4 @@
-package com.bestretail.ecommerce.config;
+package com.bestretail.ecommerce.security;
 
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,15 +22,32 @@ public final class SecurityUtils {
     public static Optional<String> getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> {
-                if (authentication.getPrincipal() instanceof UserDetails) {
-                    UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-                    return springSecurityUser.getUsername();
-                } else if (authentication.getPrincipal() instanceof String) {
-                    return (String) authentication.getPrincipal();
-                }
-                return null;
-            });
+                .map(authentication -> {
+                    if (authentication.getPrincipal() instanceof UserDetails) {
+                        UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                        return springSecurityUser.getUsername();
+                    } else if (authentication.getPrincipal() instanceof String) {
+                        return (String) authentication.getPrincipal();
+                    }
+                    return null;
+                });
+    }
+
+    /**
+     * Get the login of the current user.
+     *
+     * @return the login of the current user.
+     */
+    public static Optional<Integer> getCurrentUserId() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(securityContext.getAuthentication())
+                .map(authentication -> {
+                    if (authentication.getPrincipal() instanceof UserAuth) {
+                        UserAuth springSecurityUser = (UserAuth) authentication.getPrincipal();
+                        return springSecurityUser.getUserId();
+                    }
+                    return null;
+                });
     }
 
     /**
@@ -41,8 +58,8 @@ public final class SecurityUtils {
     public static Optional<String> getCurrentUserJWT() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
-            .filter(authentication -> authentication.getCredentials() instanceof String)
-            .map(authentication -> (String) authentication.getCredentials());
+                .filter(authentication -> authentication.getCredentials() instanceof String)
+                .map(authentication -> (String) authentication.getCredentials());
     }
 
     /**
@@ -53,9 +70,9 @@ public final class SecurityUtils {
     public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> authentication.getAuthorities().stream()
-                .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ANONYMOUS")))
-            .orElse(false);
+                .map(authentication -> authentication.getAuthorities().stream()
+                        .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ANONYMOUS")))
+                .orElse(false);
     }
 
     /**
@@ -69,8 +86,8 @@ public final class SecurityUtils {
     public static boolean isCurrentUserInRole(String authority) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority)))
-            .orElse(false);
+                .map(authentication -> authentication.getAuthorities().stream()
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority)))
+                .orElse(false);
     }
 }

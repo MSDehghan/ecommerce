@@ -1,16 +1,13 @@
-package com.bestretail.ecommerce.config;
+package com.bestretail.ecommerce.security;
 
+import com.bestretail.ecommerce.app.user.UserEntity;
 import com.bestretail.ecommerce.app.user.UserRepository;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-
-@Service()
+@Service
 public class DomainUserDetailsService implements UserDetailsService {
 
     private final UserRepository repository;
@@ -21,12 +18,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.bestretail.ecommerce.app.user.User user = repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Email not found"));
-
-        return new User(
-                user.getEmail(),
-                user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()))
-        );
+        UserEntity userEntity = repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Email not found"));
+        return new UserAuth(userEntity);
     }
 }

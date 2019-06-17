@@ -1,4 +1,4 @@
-package com.bestretail.ecommerce.config.jwt;
+package com.bestretail.ecommerce.security.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

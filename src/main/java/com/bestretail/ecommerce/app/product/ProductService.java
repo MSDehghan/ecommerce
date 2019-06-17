@@ -40,4 +40,12 @@ public class ProductService {
                 .map(product -> new SearchResult(product, new Date(), 1, 1))
                 .collect(Collectors.toList());
     }
+
+    public void removeById(int pid) {
+        Optional<Product> optionalProduct = repository.findById(pid);
+        optionalProduct.orElseThrow(() ->
+                new ResourceNotFoundException("ProductNotFound")
+        );
+        repository.delete(optionalProduct.get());
+    }
 }
