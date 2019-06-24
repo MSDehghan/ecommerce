@@ -48,4 +48,12 @@ public class ProductService {
         );
         repository.delete(optionalProduct.get());
     }
+
+    public List<Product> getTop10() {
+        return repository.findTop10By();
+    }
+
+    public List<Product> getTop10Promotions() {
+        return repository.findTop10ByPromotionIsNotNull();
+    }
 }

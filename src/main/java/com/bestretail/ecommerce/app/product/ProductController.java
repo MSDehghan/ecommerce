@@ -39,9 +39,23 @@ public class ProductController {
         return service.searchInName(search);
     }
 
+    public List<Product> getMainPageTop10() {
+        return service.getTop10();
+    }
+
     @GetMapping("/category")
     public List<SearchResult> getAllInCategory(int catId) {
         return service.getAllInCat(catId);
+    }
+
+    @GetMapping("/main_page")
+    public List<Product> getTop10Products() {
+        return service.getTop10();
+    }
+
+    @GetMapping("/promotions")
+    public List<Product> getTop10Promotions() {
+        return service.getTop10Promotions();
     }
 }
 
