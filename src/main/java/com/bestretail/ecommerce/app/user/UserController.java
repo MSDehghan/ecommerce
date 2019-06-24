@@ -23,11 +23,9 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService service;
 
-
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
 
     public UserController(UserService service, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.service = service;
@@ -58,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/userinfo")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole(\"USER\")")
     public UserEntity getInfo() {
         return service.getUserInfo(SecurityUtils.getCurrentUserLogin().orElseThrow(IllegalStateException::new));
     }

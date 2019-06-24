@@ -16,12 +16,11 @@ public class CartController {
         this.service = service;
     }
 
-
     @ApiOperation("This endpoint is used to add or delete or update an item in user cart." +
             "if count == 0, item will be deleted otherwise item will be updated or created." +
             "User Cart is returned in response.")
     @PutMapping("/item")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole(\"USER\")")
     public List<CartItemProjection> putItemInCart(@Valid @RequestBody CartItemPutDto item) {
         service.putItem(item);
         return service.getCartOfCurrentUser();
@@ -31,13 +30,14 @@ public class CartController {
             "if count == 0, item will be deleted otherwise item will be updated or created." +
             "User Cart is returned in response.")
     @PutMapping("/items")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole(\"USER\")")
     public List<CartItemProjection> putAllInCart(@Valid @RequestBody List<CartItemPutDto> items) {
         service.putItems(items);
         return service.getCartOfCurrentUser();
     }
 
     @GetMapping("/cart")
+    @PreAuthorize("hasRole(\"USER\")")
     public List<CartItemProjection> getAll() {
         return service.getCartOfCurrentUser();
     }
