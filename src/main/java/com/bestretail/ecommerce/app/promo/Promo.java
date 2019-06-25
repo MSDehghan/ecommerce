@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Table(name = "promotions")
 public class Promo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
