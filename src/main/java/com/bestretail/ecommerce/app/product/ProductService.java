@@ -1,6 +1,8 @@
 package com.bestretail.ecommerce.app.product;
 
 import com.bestretail.ecommerce.app.product.dto.SearchResult;
+import com.bestretail.ecommerce.app.promo.Promo;
+import com.bestretail.ecommerce.app.promo.PromoRepository;
 import com.bestretail.ecommerce.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,22 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     private final ProductRepository repository;
+    private final PromoRepository promoRepository;
 
-    public ProductService(ProductRepository repository) {
+    public ProductService(ProductRepository repository, PromoRepository promoRepository) {
         this.repository = repository;
+        this.promoRepository = promoRepository;
     }
 
     public Product add(Product product) {
+        if (product.getPromotion() != null && product.getPromotion().getId() != null) {
+            Optional<Promo> promoOptional = promoRepository.findById(product.getPromotion().getId());
+            if (promoOptional.isPresent()) {
+                product.setPromotion(promoOptional.get());
+            } else {
+                throw new ResourceNotFoundException("Promo Not Found!");
+            }
+        }
         return repository.save(product);
     }
 
